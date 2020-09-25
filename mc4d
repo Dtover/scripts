@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar /home/dtover/Game/MagicCube4D/mc4d-4-3-216.jar

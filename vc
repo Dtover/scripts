@@ -1,0 +1,36 @@
+#!/bin/bash
+config_path=/home/dtover/Documents/v2rayconfig
+config_num=$(expr $(ls $config_path | wc -l) - 2)
+isfind=false
+final_config=""
+function change_config()
+{
+	if [[ $# == 0 ]];then
+		# Get a num between 0 and config_num - 1
+		num=$[RANDOM%$config_num]
+		((num++))
+	else
+		num=$1
+	fi
+	[[ $num -lt 10 ]] && num=0"$num"
+
+	rfile_name=config-${num}
+	for file in $(ls $config_path);do
+		vfile=${file} 
+		if [[ ${vfile} == ${rfile_name}* ]];then
+			isfind=true
+			final_config=$config_path/$vfile
+			break
+		fi
+	done
+	$isfind && echo $final_config
+	sudo -A cp ${final_config} /etc/v2ray/config.json
+	sudo systemctl restart v2ray.service
+}
+change_config $1 && notify-send "use config: "${final_config##*/}
+#proxychains curl -i google.com > /dev/null 2>&1
+#if [[ $? == 0 ]];then
+	#notify-send "Config worked !"
+#else
+	#notify-send "Something Wrong !"
+#fi
