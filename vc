@@ -1,4 +1,5 @@
 #!/bin/bash
+#Change v2ray configuration file
 config_path=/home/dtover/Documents/v2rayconfig
 config_num=$(expr $(ls $config_path | wc -l) - 2)
 isfind=false

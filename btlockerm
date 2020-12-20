@@ -3,6 +3,8 @@
 # Author : Pavan Jadhaw
 # Github Profile : https://github.com/pavanjadhaw
 # Project Repository : https://github.com/pavanjadhaw/betterlockscreen
+# 
+# This has been modified for a specify usage of multi-monitor(1920x1200 and 1080x1920)
 
 # find your resolution so images can be resized to match your screen resolution
 res=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
@@ -36,8 +38,8 @@ init_filenames() {
 	fi
 
 	# create folder in ~/.cache/i3lock directory
-	res_folder="$HOME/.cache/btlocker_right/$1"
-	folder="$HOME/.cache/btlocker_right/current"
+	res_folder="$HOME/.cache/btlockerm/$1"
+	folder="$HOME/.cache/btlockerm/current"
 	echo "Got" "$@" "$res_folder"
 	if [ ! -d "$folder" -o -n "$2" ]; then
 		rm -rf "$folder"
@@ -86,13 +88,13 @@ lock() {
 
 	i3lock \
 		-t -i "$1" \
-		--timepos='x+1310:h+470' \
-		--datepos='x+1243:h+495' \
+		--timepos='x+110:h+478' \
+		--datepos='x+43:h+503' \
 		--clock --date-align 1 --datestr "$locktext" \
 		--insidecolor=$insidecolor --ringcolor=$ringcolor --line-uses-inside \
 		--keyhlcolor=$keyhlcolor --bshlcolor=$bshlcolor --separatorcolor=$separatorcolor \
 		--insidevercolor=$insidevercolor --insidewrongcolor=$insidewrongcolor \
-		--ringvercolor=$ringvercolor --ringwrongcolor=$ringwrongcolor --indpos='x+1450:h+480' \
+		--ringvercolor=$ringvercolor --ringwrongcolor=$ringwrongcolor --indpos='x+260:h+480' \
 		--radius=20 --ring-width=4 --veriftext='' --wrongtext='' \
 		--verifcolor="$verifcolor" --timecolor="$timecolor" --datecolor="$datecolor" \
 		--time-font="$font" --date-font="$font" --layout-font="$font" --verif-font="$font" --wrong-font="$font" \
@@ -190,14 +192,13 @@ update() {
 	# default blur level; fallback to 1
 	[[ $blur_level ]] || blur_level=1
 
+	#only generate rectangle on first screen
 	rectangles=" "
-	SR=$(xrandr --query | grep ' connected' | grep -o '[0-9][0-9]*x[0-9][0-9]*[^ ]*')
-	for RES in $SR; do
-		SRA=(${RES//[x+]/ })
-		CX=$((SRA[2] + $(logical_px 1525 1))) #orignal: 25
-		CY=$((SRA[1] - $(logical_px 30 2)))
-		rectangles+="rectangle $CX,$CY $((CX+$(logical_px 300 1))),$((CY-$(logical_px 80 2))) "
-	done
+	SR=$(xrandr --query | grep ' connected' | grep -o '[0-9][0-9]*x[0-9][0-9]*[^ ]*' | head -n 1)
+	SRA=(${SR//[x+]/ })
+	CX=$((SRA[2] + $(logical_px 25 1))) #orignal: 1525
+	CY=$((SRA[1] + $(logical_px 640 2))) #orignal: 640
+	rectangles+="rectangle $CX,$CY $((CX+$(logical_px 300 1))),$((CY-$(logical_px 80 2))) "
 
 	# User supplied Image
 	user_image="$folder/user_image.png"

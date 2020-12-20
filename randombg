@@ -9,6 +9,6 @@
 #done
 #PI="$(ls $path | grep $image)"
 #setbg $path$PI 2> /dev/null;
-pathimage=$(find ~/Pictures/BG_images/ type f | shuf | head -n 1)
+pathimage=$(find ~/Pictures/BG_images/ | shuf | head -n 1)
 #setbg $pathimage 2> /dev/null;
 echo $pathimage
