@@ -4,9 +4,11 @@
 
 #scrot -o ~/.cache/lock/lock.png
 
-convert ~/.cache/lock/lock.png -blur 0x5.0 ~/.cache/lock/blurlock.png
+#convert ~/.cache/lock/lock.png -blur 0x5.0 ~/.cache/lock/blurlock.png
 
-i3lock -i ~/.cache/lock/blurlock.png --insidecolor=0000001c --ringcolor=0000003e \
+i3lock -i ~/.cache/lock/blurlock.png \
+		--color 00000000 \
+		--insidecolor=0000001c --ringcolor=0000003e \
         --linecolor=00000000 --keyhlcolor=ffffff80 --ringvercolor=ffffff00 \
         --separatorcolor=22222260 --insidevercolor=ffffff1c \
         --ringwrongcolor=ffffff55 --insidewrongcolor=ffffff1c \

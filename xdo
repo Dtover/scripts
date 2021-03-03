@@ -1,7 +1,6 @@
 #!/bin/bash
-for((i=0;i<500;i++));do
-	xdotool key Down;
-done
-#xdotool mousemove 870 1050
-#sleep 0.1s
-#xdotool mousemove 870 750
+# a simple command to move mouse
+#for((i=0;i<500;i++));do
+	#xdotool key Down;
+#done
+xdotool mousemove 325 755 click 1 click 1 click 1 mousemove 600 800
